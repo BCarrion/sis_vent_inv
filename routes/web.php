@@ -14,3 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('almacen/articulo', 'ArticuloController');
+Route::resource('almacen/categoria', 'CategoriaController');
+Route::resource('almacen/detalle_ingreso', 'DetalleIngresoController');
+Route::resource('almacen/detalle_venta', 'DetalleVentaController');
+Route::resource('almacen/ingreso', 'IngresoController');
+Route::resource('almacen/inventario', 'InventarioController');
+Route::resource('almacen/persona', 'PersonaController');
+Route::resource('almacen/venta', 'VentaController');
