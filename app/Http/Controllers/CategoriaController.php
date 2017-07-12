@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Request;
 use App\Categoria;
 use App\Http\Requests\CategoriaFormRequest;
 use DB;
