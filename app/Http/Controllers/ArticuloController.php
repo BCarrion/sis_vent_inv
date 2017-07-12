@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Request;
+use App\Http\Requests\ArticuloFormRequest;
+use App\Articulo;
 use App\Categoria;
-use App\Http\Requests\CategoriaFormRequest;
 use DB;
 
-class CategoriaController extends Controller
+class ArticuloController extends Controller
 {
     public function __construct()
     {
@@ -25,11 +26,10 @@ class CategoriaController extends Controller
         if($request)
         {
           $query=trim($request->get('searchText'));
-          $categorias=DB::table('categoria')->where('nombre', 'LIKE', '%'.$query.'%')
-          ->where('estado', '=', '1')
-          ->orderBy('idcategoria', 'DESC')
+          $articulos=DB::table('articulo')->where('nombre', 'LIKE', '%'.$query.'%')
+          ->orderBy('idarticulo', 'DESC')
           ->paginate(8);
-          return view('almacen.categoria.index', ['categorias'=>$categorias, 'searchText'=>$query]);
+          return view('almacen.articulo.index', ['articulos'=>$articulos, 'searchText'=>$query]);
         }
     }
 
@@ -40,7 +40,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        return view('almacen.categoria.create');
+        return Redirect::to('almacen.articulo.create');
     }
 
     /**
@@ -49,15 +49,18 @@ class CategoriaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoriaFormRequest $request)
+    public function store(ArticuloFormRequest $request)
     {
-        $categoria= new Categoria();
-        $categoria->nombre->request->get('nombre');
-        $categoria->descripcion->request->get('descripcion');
-        $categoria->estado=1;
+        $articulo=new Articulo();
+        $articulo->codigo->request->get('codigo');
+        $articulo->nombre->request->get('nombre');
+        $articulo->cantidad->request->get('cantidad');
+        $articulo->descripcion->request->get('descripcion');
+        $articulo->imagen->request->get('imagen');
+        $articulo->estado->request->get('estado');
         $categoria->save();
 
-        return Redirect::to('almace.categoria');
+        return Redirect::to('almacen.articulo');
     }
 
     /**
@@ -68,7 +71,7 @@ class CategoriaController extends Controller
      */
     public function show($id)
     {
-        return view('almacen.categoria.show', ['categoria'=>Categoria::findOrFail($id)]);
+        return view('almacen.articulo.show', ['articulo'=>Articulo::findOrFail($id)]);
     }
 
     /**
@@ -79,7 +82,7 @@ class CategoriaController extends Controller
      */
     public function edit($id)
     {
-        return view('almacen.categoria.edit', ['categoria'=>Categoria::findOrFail($id)]);
+        return view('almacen.articulo.edit', ['articulo'=>Articulo::findOrFail($id)]);
     }
 
     /**
@@ -89,13 +92,18 @@ class CategoriaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoriaFormRequest $request, $id)
+    public function update(ArticuloFormRequest $request, $id)
     {
-        $categoria=Categoria::findOrFail($id);
-        $categoria->nombre=$request->get('nombre');
-        $categoria->descripcion=$request->get('descripcion');
-        $categoria->update();
-        return Redirect::to('almacen.categoria');
+        $articulo=Articulo::findOrFail($id);
+        $articulo->codigo=$request->get('codigo');
+        $articulo->nombre=$request->get('nombre');
+        $articulo->cantidad=$request->get('cantidad');
+        $articulo->descripcion=$request->get('descripcion');
+        $articulo->imagen=$request->get('imagen');
+        $articulo->estado=$request->get('estado');
+        $articulo->update();
+
+        return Redirect::to('almacen.articulo');
     }
 
     /**
@@ -106,9 +114,6 @@ class CategoriaController extends Controller
      */
     public function destroy($id)
     {
-        $categoria=Categoria::findOrFail($id);
-        $categoria->estado='0';
-        $categoria=update();
-        return Redirect::to('almacen.categoria');
+        //
     }
 }
