@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Input;//usado para subir las imagenes desde el cliente
 use App\Http\Requests\ArticuloFormRequest;
 use App\Articulo;
 use App\Categoria;
@@ -25,8 +26,11 @@ class ArticuloController extends Controller
         if($request)
         {
           $query=trim($request->get('searchText'));
-          $articulos=DB::table('articulo')->where('nombre', 'LIKE', '%'.$query.'%')
-          ->orderBy('idarticulo', 'DESC')
+          $articulos=DB::table('articulo as a')
+          ->join('categoria as c', 'a.idcategoria', '=', 'c.idcategoria')
+          ->select('a.idarticulo', 'c.nombre as categoria', 'a.codigo', 'a.nombre', 'a.cantidad',  'a.descripcion', 'a.imagen', 'a.estado')
+          ->where('a.nombre', 'LIKE', '%'.$query.'%')
+          ->orderBy('a.idarticulo', 'DESC')
           ->paginate(8);
           return view('almacen.articulo.index', ['articulos'=>$articulos, 'searchText'=>$query]);
         }

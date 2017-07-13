@@ -11,6 +11,7 @@ class Articulo extends Model
     public $timestamps=false;
 
     protected fillable=[
+      'idcategoria',
       'codigo',
       'nombre',
       'cantidad',
