@@ -51,12 +51,12 @@ class CategoriaController extends Controller
     public function store(CategoriaFormRequest $request)
     {
         $categoria= new Categoria();
-        $categoria->nombre->request->get('nombre');
-        $categoria->descripcion->request->get('descripcion');
+        $categoria->nombre=$request->get('nombre');
+        $categoria->descripcion=$request->get('descripcion');
         $categoria->estado=1;
         $categoria->save();
 
-        return Redirect::to('almace.categoria');
+        return Redirect::to('almacen/categoria');
     }
 
     /**
@@ -94,7 +94,7 @@ class CategoriaController extends Controller
         $categoria->nombre=$request->get('nombre');
         $categoria->descripcion=$request->get('descripcion');
         $categoria->update();
-        return Redirect::to('almacen.categoria');
+        return Redirect::to('almacen/categoria');
     }
 
     /**
@@ -107,7 +107,7 @@ class CategoriaController extends Controller
     {
         $categoria=Categoria::findOrFail($id);
         $categoria->estado='0';
-        $categoria=update();
-        return Redirect::to('almacen.categoria');
+        $categoria->update();
+        return Redirect::to('almacen/categoria');
     }
 }
