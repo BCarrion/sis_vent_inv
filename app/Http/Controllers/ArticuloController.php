@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;//usado para subir las imagenes desde el cliente
 use App\Http\Requests\ArticuloFormRequest;
 use App\Articulo;
-use App\Categoria;
 use DB;
 
 class ArticuloController extends Controller
@@ -30,6 +29,7 @@ class ArticuloController extends Controller
           ->join('categoria as c', 'a.idcategoria', '=', 'c.idcategoria')
           ->select('a.idarticulo', 'c.nombre as categoria', 'a.codigo', 'a.nombre', 'a.cantidad',  'a.descripcion', 'a.imagen', 'a.estado')
           ->where('a.nombre', 'LIKE', '%'.$query.'%')
+          ->orwhere('a.codigo', 'LIKE', '%'.$query.'%')
           ->orderBy('a.idarticulo', 'DESC')
           ->paginate(8);
           return view('almacen.articulo.index', ['articulos'=>$articulos, 'searchText'=>$query]);
@@ -43,7 +43,8 @@ class ArticuloController extends Controller
      */
     public function create()
     {
-        return Redirect::to('almacen.articulo.create');
+        $categorias=DB::table('categoria')->where('estado', '=', '1')->get();
+        return view('almacen.articulo.create', ['categorias'=>$categorias]);
     }
 
     /**
@@ -55,15 +56,23 @@ class ArticuloController extends Controller
     public function store(ArticuloFormRequest $request)
     {
         $articulo=new Articulo();
-        $articulo->codigo->request->get('codigo');
-        $articulo->nombre->request->get('nombre');
-        $articulo->cantidad->request->get('cantidad');
-        $articulo->descripcion->request->get('descripcion');
-        $articulo->imagen->request->get('imagen');
-        $articulo->estado->request->get('estado');
-        $categoria->save();
+        $articulo->idcategoria=$request->get('idcategoria');
+        $articulo->codigo=$request->get('codigo');
+        $articulo->nombre=$request->get('nombre');
+        $articulo->cantidad=$request->get('cantidad');
+        $articulo->descripcion=$request->get('descripcion');
+        $articulo->estado='Activo';
 
-        return Redirect::to('almacen.articulo');
+        if (Input::hasfile('imagen'))
+        {
+          $file=Input::file('imagen');
+          $file->move(public_path().'/images/articulos/', $file->getClientOriginalName());
+          $articulo->imagen=$file->getClientOriginalName();
+        }
+
+        $articulo->save();
+
+        return Redirect::to('almacen/articulo');
     }
 
     /**
@@ -85,7 +94,9 @@ class ArticuloController extends Controller
      */
     public function edit($id)
     {
-        return view('almacen.articulo.edit', ['articulo'=>Articulo::findOrFail($id)]);
+        $articulo=Articulo::findOrFail($id);
+        $categorias=DB::table('categoria')->where('estado', '=', '1')->get();
+        return view('almacen.articulo.edit', ['articulo'=>$articulo, 'categorias'=>$categorias]);
     }
 
     /**
@@ -97,16 +108,25 @@ class ArticuloController extends Controller
      */
     public function update(ArticuloFormRequest $request, $id)
     {
-        $articulo=Articulo::findOrFail($id);
-        $articulo->codigo=$request->get('codigo');
-        $articulo->nombre=$request->get('nombre');
-        $articulo->cantidad=$request->get('cantidad');
-        $articulo->descripcion=$request->get('descripcion');
-        $articulo->imagen=$request->get('imagen');
-        $articulo->estado=$request->get('estado');
+
+      $articulo=Articulo::findOrFail($id);
+
+      $articulo->idcategoria=$request->get('idcategoria');
+      $articulo->codigo=$request->get('codigo');
+      $articulo->nombre=$request->get('nombre');
+      $articulo->cantidad=$request->get('cantidad');
+      $articulo->descripcion=$request->get('descripcion');
+
+      if (Input::hasfile('imagen'))
+      {
+        $file=Input::file('imagen');
+        $file->move(public_path().'/images/articulos/', $file->getClientOriginalName());
+        $articulo->imagen=$file->getClientOriginalName();
+      }
+
         $articulo->update();
 
-        return Redirect::to('almacen.articulo');
+        return Redirect::to('almacen/articulo');
     }
 
     /**
@@ -117,6 +137,9 @@ class ArticuloController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $articulo=Articulo::findOrFail($id);
+        $articulo->estado='Inactivo';
+        $articulo->update();
+        return Redirect::to('almacen/articulo');
     }
 }

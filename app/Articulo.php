@@ -10,7 +10,7 @@ class Articulo extends Model
     protected $primaryKey='idarticulo';
     public $timestamps=false;
 
-    protected fillable=[
+    protected $fillable=[
       'idcategoria',
       'codigo',
       'nombre',
@@ -18,5 +18,9 @@ class Articulo extends Model
       'descripcion',
       'imagen',
       'estado'
+    ];
+
+    protected $guarded=[
+
     ];
 }
