@@ -11,6 +11,7 @@ class Ingreso extends Model
     public $timestamps=false;
 
     protected $fillable=[
+      'idproveedor',
       'tipo_comprobante',
       'serie_comprobante',
       'num_comprobante',
@@ -18,5 +19,9 @@ class Ingreso extends Model
       'impuesto',
       'valor',
       'estado'
+    ];
+
+    protected $guarded=[
+      
     ];
 }

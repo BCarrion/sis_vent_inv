@@ -11,6 +11,8 @@ class DetalleIngreso extends Model
     public $timestamps=false;
 
     protected $fillable=[
+      'idingreso',
+      'idarticulo',
       'cantidad',
       'precio_compra',
       'precio_venta'

@@ -10,6 +10,10 @@ use DB;
 
 class ClienteController extends Controller
 {
+    public function __construct()
+    {
+
+    }
     /**
      * Display a listing of the resource.
      *
