@@ -108,7 +108,6 @@ class CategoriaController extends Controller
         $categoria=Categoria::findOrFail($id);
         $categoria->estado='0';
         $categoria->update();
-        dd('entre');
         return Redirect::to('almacen/categoria');
     }
 }

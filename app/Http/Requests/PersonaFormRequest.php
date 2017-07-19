@@ -24,7 +24,6 @@ class PersonaFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'tipo_persona'=>'required|max:20',
             'nombre'=>'required|max:50',
             'apellidos'=>'max:50',
             'tipo_documento'=>'required|max:50',

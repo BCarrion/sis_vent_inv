@@ -11,6 +11,7 @@ class Persona extends Model
     public $timestamps=false;
 
     protected $fillable=[
+      'tipo_persona',
       'nombre',
       'apellidos',
       'tipo_documento',
@@ -18,5 +19,9 @@ class Persona extends Model
       'direccion',
       'telefono',
       'correo'
+    ];
+
+    protected $guarded=[
+
     ];
 }
