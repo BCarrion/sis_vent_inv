@@ -11,6 +11,8 @@ class DetalleVenta extends Model
     public $timestamps=false;
 
     protected $fillable=[
+      'idventa',
+      'idarticulo',
       'cantidad',
       'precio_venta',
       'descuento'

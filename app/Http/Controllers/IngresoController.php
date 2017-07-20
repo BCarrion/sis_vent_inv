@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\IngresoFormRequest;
 use Illuminate\Support\Facades\Input;
@@ -53,13 +54,14 @@ class IngresoController extends Controller
      */
     public function create()
     {
-        $persona=DB::table('persona')->where('tipo_persona', '=', 'Proveedor')->get();
+        $personas=DB::table('persona')->where('tipo_persona', '=', 'Proveedor')->get();
         $articulos=DB::table('articulo as art')
         ->select(DB::raw('CONCAT(art.codigo, " ", art.nombre) AS articulo'), 'art.idarticulo')
-        ->get()
-        ->where('art.estado', '=', 'Activo');
+        ->where('art.estado', '=', 'Activo')
+        ->get();
 
-        return view('compras.ingreso.create', ['persona'=>$persona, 'articulos'=>$articulos]);
+
+        return view('compras.ingreso.create', ['personas'=>$personas, 'articulos'=>$articulos]);
     }
 
     /**
@@ -89,7 +91,7 @@ class IngresoController extends Controller
           $precio_compra=$request->get('precio_compra');
           $precio_venta=$request->get('precio_venta');
 
-          $contador=0;
+          $cont=0;
 
           while ($cont<count($idarticulo)) {
             $detalle=new DetalleIngreso();
@@ -100,7 +102,7 @@ class IngresoController extends Controller
             $detalle->precio_venta=$precio_venta[$cont];
             $detalle->save();
 
-            $contador=$contador+1;
+            $cont=$cont+1;
           }
 
           DB::commit();

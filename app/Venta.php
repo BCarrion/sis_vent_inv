@@ -11,6 +11,7 @@ class Venta extends Model
     public $timestamps=false;
 
     public $fillable=[
+      'idcliente',
       'tipo_comprobante',
       'serie_comprobante',
       'num_comprobante',
