@@ -21,7 +21,7 @@
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="form-group">
       <label for="cliente">Cliente</label>
-      <select class="form-control" name="idcliente" id="idcliente">
+      <select class="form-control selectpicker" name="idcliente" id="idcliente" data-live-search="true">
         @foreach($personas as $persona)
           <option value="{{$persona->idpersona}}">{{$persona->nombre}}</option>
         @endforeach()
@@ -56,7 +56,7 @@
       <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
         <div class="form-group">
           <label>Articulo</label>
-          <select class="form-control" name="pidarticulo" id="pidarticulo">
+          <select class="form-control selectpicker" name="pidarticulo" id="pidarticulo" data-live-search="true">
             @foreach($articulos as $articulo)
               <option value="{{$articulo->idarticulo}}_{{$articulo->cantidad}}_{{$articulo->precio_promedio}}">{{$articulo->articulo}}</option>
             @endforeach
