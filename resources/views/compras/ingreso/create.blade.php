@@ -16,7 +16,7 @@
 </div>
 
 {!!Form::open(array('url'=>'compras/ingreso', 'method'=>'POST', 'autocomplete'=>'off'))!!}
-{!!Form::token()!!}
+{{Form::token()}}
 <div class="row">
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="form-group">
@@ -40,7 +40,7 @@
   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
     <div class="form-group">
       <label for="serie_comprobante">Serie Comprobante</label>
-      <input type="text" name="serie_comprobante" required value="{{old('serie_comprobante')}}" class="form-control" placeholder="Serie de comprobante...">
+      <input type="text" name="serie_comprobante" value="{{old('serie_comprobante')}}" class="form-control" placeholder="Serie de comprobante...">
     </div>
   </div>
   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -110,7 +110,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="opciones">
+  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="guardar">
     <div class="form-group">
       <input name="_token" value="{{csrf_token()}}" type="hidden"></input>
       <button type="submit" class="btn btn-primary">Guardar</button>
@@ -144,7 +144,7 @@
 
     if (idarticulo!="" && cantidad!="" && cantidad>0 && pprecio_compra!="" && pprecio_venta!="")
     {
-      subtotal[cont]=(cantidad*pprecio_compra);
+      subtotal[cont]=(cantidad*precio_compra);
       total=total+subtotal[cont];
 
       var fila='<tr class="selected" id="fila'+cont+'"> <td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td> <td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td> <td><input type="number" name="cantidad[]" value="'+cantidad+'"></td> <td><input type="number" name="precio_compra[]" value="'+precio_compra+'"></td> <td><input type="number" name="precio_venta[]" value="'+precio_venta+'"></td> <td>'+subtotal[cont]+'</td></tr>'
@@ -172,11 +172,11 @@
   {
       if(total>0)
       {
-        $("#opciones").show;
+        $("#guardar").show();
       }
       else
       {
-        $("#opciones").hide;
+        $("#guardar").hide();
       }
   }
 

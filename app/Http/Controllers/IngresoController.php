@@ -60,7 +60,6 @@ class IngresoController extends Controller
         ->where('art.estado', '=', 'Activo')
         ->get();
 
-
         return view('compras.ingreso.create', ['personas'=>$personas, 'articulos'=>$articulos]);
     }
 
@@ -107,7 +106,7 @@ class IngresoController extends Controller
 
           DB::commit();
         }
-        catch (\Exception $e)
+        catch (Exception $e)
         {
           DB::rollback();
         }
