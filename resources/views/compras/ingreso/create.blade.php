@@ -112,9 +112,9 @@
   </div>
   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="guardar">
     <div class="form-group">
-      <input name="_token" value="{{csrf_token()}}" type="hidden"></input>
       <button type="submit" class="btn btn-primary">Guardar</button>
       <button type="reset" class="btn btn-danger">Cancelar</button>
+      <input name="_token" value="{!!csrf_token()!!}" type="hidden"></input>
     </div>
   </div>
 </div>

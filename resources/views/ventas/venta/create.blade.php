@@ -31,7 +31,7 @@
   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
     <div class="form-group">
       <label>Tipo Comprobante</label>
-      <select class="form-control" name="tipo_documento">
+      <select class="form-control" name="tipo_comprobante">
         <option value="remision">Remisión</option>
         <option value="factura">Factura</option>
       </select>
@@ -45,8 +45,8 @@
   </div>
   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
     <div class="form-group">
-      <label for="numero_comprobante">Número Comprobante</label>
-      <input type="text" name="numero_comprobante" required value="{{old('serie_comprobante')}}" class="form-control" placeholder="Número de comprobante...">
+      <label for="num_comprobante">Número Comprobante</label>
+      <input type="text" name="num_comprobante" required value="{{old('serie_comprobante')}}" class="form-control" placeholder="Número de comprobante...">
     </div>
   </div>
 </div>
@@ -145,7 +145,7 @@
   {
     datosArticulo=document.getElementById('pidarticulo').value.split('_');
     $('#pprecio_venta').val(datosArticulo[2]);
-    $('#pstock').val(datosArticulo[1]);
+    $('#pdisponible').val(datosArticulo[1]);
   }
 
   function agregar()
@@ -166,7 +166,7 @@
         subtotal[cont]=(cantidad*precio_venta-descuento);
         total=total+subtotal[cont];
 
-        var fila='<tr class="selected" id="fila'+cont+'"> <td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td> <td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td> <td><input type="number" name="cantidad[]" value="'+cantidad+'"></td> <td><input type="number" name="pprecio_venta[]" value="'+pprecio_venta+'"></td> <td><input type="number" name="pdescuento[]" value="'+pdescuento+'"></td> <td>'+subtotal[cont]+'</td></tr>'
+        var fila='<tr class="selected" id="fila'+cont+'"> <td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td> <td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td> <td><input type="number" name="cantidad[]" value="'+cantidad+'"></td> <td><input type="number" name="precio_venta[]" value="'+precio_venta+'"></td> <td><input type="number" name="descuento[]" value="'+descuento+'"></td> <td>'+subtotal[cont]+'</td></tr>'
 
         cont++;
         limpiar();

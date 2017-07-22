@@ -10,7 +10,7 @@ role="dialog" tabindex="-1" id="modal-delete-{{$ven->idventa}}">
         <h4 class="modal-tittle">Cancelar Venta</h4>
       </div>
       <div class="modal-body">
-        <p>Confirme si desea cancelar la venta</p>
+        <p>Confirme si desea cancelar la venta seleccionada</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

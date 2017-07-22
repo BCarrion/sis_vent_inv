@@ -17,4 +17,8 @@ class DetalleIngreso extends Model
       'precio_compra',
       'precio_venta'
     ];
+
+    protected $guarded=[
+
+    ];
 }

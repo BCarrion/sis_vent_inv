@@ -31,7 +31,7 @@ class VentaFormRequest extends FormRequest
             'idarticulo'=>'required',
             'cantidad'=>'required',
             'precio_venta'=>'required',
-            'descruento'=>'required',
+            'descuento'=>'required',
             'total_venta'=>'required',
         ];
     }

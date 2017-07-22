@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Request;
 
 class IngresoFormRequest extends FormRequest
 {
@@ -31,11 +32,7 @@ class IngresoFormRequest extends FormRequest
             'idarticulo'=>'required',
             'cantidad'=>'required',
             'precio_compra'=>'required',
-            'precio_venta'=>'required',
-            'fecha_hora'=>'required',
-            'impuesto'=>'required',
-            'valor'=>'required|max:45',
-            'estado'=>'required|max:20'
+            'precio_venta'=>'required'
         ];
     }
 }

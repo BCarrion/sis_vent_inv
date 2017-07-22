@@ -40,7 +40,7 @@ class VentaController extends Controller
          ->where('v.num_comprobante', 'LIKE', '%'.$query.'%')
          ->orderBy('v.idventa', 'DESC')
          ->groupBy('v.idventa', 'v.fecha_hora', 'p.nombre', 'v.tipo_comprobante',
-                  'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.estado', 'v.total_venta')
+                  'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.estado')
          ->paginate(8);
 
          return view('ventas.venta.index', ['ventas'=>$ventas, 'searchText'=>$query]);
@@ -64,7 +64,6 @@ class VentaController extends Controller
         ->groupBy('articulo', 'art.idarticulo', 'art.cantidad')
         ->get();
 
-
         return view('ventas.venta.create', ['personas'=>$personas, 'articulos'=>$articulos]);
     }
 
@@ -79,8 +78,8 @@ class VentaController extends Controller
         try
         {
           DB::beginTransaction();
-          $venta=new Ingreso();
-          $venta->idcliente=$request->get('idcliente ');
+          $venta=new Venta();
+          $venta->idcliente=$request->get('idcliente');
           $venta->tipo_comprobante=$request->get('tipo_comprobante');
           $venta->serie_comprobante=$request->get('serie_comprobante');
           $venta->num_comprobante=$request->get('num_comprobante');
@@ -129,7 +128,7 @@ class VentaController extends Controller
      */
     public function show($id)
     {
-        $ventas=DB::table('ventas as v')
+        $ventas=DB::table('venta as v')
         ->join('persona as p', 'v.idcliente', '=', 'p.idpersona')
         ->join('detalle_venta as dv ', 'v.idventa', '=', 'dv.idventa')
         ->select('v.idventa', 'v.fecha_hora', 'p.nombre', 'v.tipo_comprobante',
@@ -140,7 +139,7 @@ class VentaController extends Controller
 
         $detalles=DB::table('detalle_venta as d')
         ->join('articulo as a', 'd.idarticulo', '=', 'a.idarticulo')
-        ->select('a.nombre as articulo', 'd.cantidad', 'd.precio_compra', 'd.precio_venta')
+        ->select('a.nombre as articulo', 'd.cantidad', 'd.descuento', 'd.precio_venta')
         ->where('d.idventa', '=', $id )
         ->get();
 
@@ -180,8 +179,8 @@ class VentaController extends Controller
     {
 
         $venta=Venta::findOrFail($id);
-        $venta->Estado='C';
-        $ingreso->update();
+        $venta->estado='C';
+        $venta->update();
 
         return Redirect::to('ventas/venta');
     }

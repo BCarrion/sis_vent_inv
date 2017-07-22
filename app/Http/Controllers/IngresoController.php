@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Requests\IngresoFormRequest;
 use Illuminate\Support\Facades\Input;
+use App\Http\Requests\IngresoFormRequest;
 use App\Ingreso;
 use App\DetalleIngreso;
+use DB;
+
 use Carbon\Carbon;
 use Response;
 use Illuminate\Support\Collection;
-use DB;
 
 class IngresoController extends Controller
 {
@@ -106,7 +108,7 @@ class IngresoController extends Controller
 
           DB::commit();
         }
-        catch (Exception $e)
+        catch (\Exception $e)
         {
           DB::rollback();
         }
