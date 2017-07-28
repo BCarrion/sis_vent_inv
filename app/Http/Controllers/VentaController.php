@@ -40,7 +40,7 @@ class VentaController extends Controller
          ->where('v.num_comprobante', 'LIKE', '%'.$query.'%')
          ->orderBy('v.idventa', 'DESC')
          ->groupBy('v.idventa', 'v.fecha_hora', 'p.nombre', 'v.tipo_comprobante',
-                  'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.estado')
+                  'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.estado', 'v.total_venta')
          ->paginate(8);
 
          return view('ventas.venta.index', ['ventas'=>$ventas, 'searchText'=>$query]);
