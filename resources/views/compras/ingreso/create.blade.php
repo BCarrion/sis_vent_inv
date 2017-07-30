@@ -56,7 +56,7 @@
       <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
         <div class="form-group">
           <label>Articulo</label>
-          <select class="form-control" name="pidarticulo" id="pidarticulo">
+          <select class="form-control selectpicker" name="pidarticulo" id="pidarticulo" data-live-search="true">
             @foreach($articulos as $articulo)
               <option value="{{$articulo->idarticulo}}">{{$articulo->articulo}}</option>
             @endforeach
@@ -114,7 +114,7 @@
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Guardar</button>
       <button type="reset" class="btn btn-danger">Cancelar</button>
-      <input name="_token" value="{!!csrf_token()!!}" type="hidden"></input>
+      <input name="_token" value="{{ csrf_token() }}" type="hidden"></input>
     </div>
   </div>
 </div>
@@ -130,8 +130,8 @@
   });
 
   var cont=0;
-  total=0;
-  subtotal=[];
+  var total=0;
+  var subtotal=[];
   $('#guardar').hide();
 
   function agregar()
@@ -147,7 +147,7 @@
       subtotal[cont]=(cantidad*precio_compra);
       total=total+subtotal[cont];
 
-      var fila='<tr class="selected" id="fila'+cont+'"> <td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td> <td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td> <td><input type="number" name="cantidad[]" value="'+cantidad+'"></td> <td><input type="number" name="precio_compra[]" value="'+precio_compra+'"></td> <td><input type="number" name="precio_venta[]" value="'+precio_venta+'"></td> <td>'+subtotal[cont]+'</td></tr>'
+      var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precio_compra[]" value="'+precio_compra+'"></td><td><input type="number" name="precio_venta[]" value="'+precio_venta+'"></td><td>'+subtotal[cont]+'</td></tr>';
 
       cont++;
       limpiar();
