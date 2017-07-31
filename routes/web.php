@@ -23,5 +23,4 @@ Route::resource('compras/ingreso', 'IngresoController');
 Route::resource('ventas/venta', 'VentaController');
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');

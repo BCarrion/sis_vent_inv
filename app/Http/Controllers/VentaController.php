@@ -19,7 +19,7 @@ class VentaController extends Controller
 {
     public function __construct()
     {
-
+      $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -128,9 +128,9 @@ class VentaController extends Controller
      */
     public function show($id)
     {
-        $ventas=DB::table('venta as v')
+        $venta=DB::table('venta as v')
         ->join('persona as p', 'v.idcliente', '=', 'p.idpersona')
-        ->join('detalle_venta as dv ', 'v.idventa', '=', 'dv.idventa')
+        ->join('detalle_venta as dv', 'v.idventa', '=', 'dv.idventa')
         ->select('v.idventa', 'v.fecha_hora', 'p.nombre', 'v.tipo_comprobante',
                  'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.estado',
                  'v.total_venta')
