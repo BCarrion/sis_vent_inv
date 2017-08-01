@@ -23,5 +23,10 @@ Route::resource('compras/ingreso', 'IngresoController');
 Route::resource('ventas/venta', 'VentaController');
 Route::resource('informes/inventario', 'InventarioController');
 
+Route::get('inventario/reporte_inventario',array(
+            'as'=>'reporte_inventario',
+            'uses'=>'InventarioController@reporteIventario'
+            ));
+
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
