@@ -2,7 +2,7 @@
 @section('contenido')
 <div class="row">
   <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-    <h3>Inventario De Articulos</h3>
+    <h3>Inventario De Articulos | <a href="inventario/reporteInventario"><button class="btn btn-success" type="button" name="button">Descargar</button></a></h3>
   </div>
 </div>
 <div class="row">
