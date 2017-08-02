@@ -22,10 +22,20 @@ Route::resource('compras/proveedor', 'ProveedorController');
 Route::resource('compras/ingreso', 'IngresoController');
 Route::resource('ventas/venta', 'VentaController');
 Route::resource('informes/inventario', 'InventarioController');
+Route::resource('informes/ventas/ventas_dia', 'VentasDiaController');
+Route::resource('informes/ventas/ventas_general', 'VentasGeneralController');
 
 Route::get('inventario/reporte_inventario',array(
             'as'=>'reporte_inventario',
             'uses'=>'InventarioController@reporteIventario'
+            ));
+Route::get('ventas/ventas_dia/reporte_dia',array(
+            'as'=>'reporte_dia',
+            'uses'=>'VentasDiaController@reporteDia'
+            ));
+Route::get('ventas/ventas_dia/reporte_general',array(
+            'as'=>'reporte_general',
+            'uses'=>'VentasGeneralController@reporteGeneral'
             ));
 
 Auth::routes();

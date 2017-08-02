@@ -30,18 +30,14 @@ class InventarioController extends Controller
     public function reporteIventario(Request $request)
     {
       if ($request->has('download')) {
-        $pdf = PDF::loadView('informes.inventario.reporte_inventario');
+        $arts= Articulo::all();
+        $articulos=DB::table('articulo as a')
+        ->join('categoria as c', 'a.idcategoria', '=', 'c.idcategoria')
+        ->select('a.idarticulo', 'c.nombre as categoria', 'a.codigo', 'a.nombre', 'a.cantidad',  'a.descripcion', 'a.imagen', 'a.estado')
+        ->orderBy('a.idarticulo', 'DESC')
+        ->get();
+        $pdf = PDF::loadView('informes.inventario.reporte_inventario', array('articulos'=>$articulos));
         return $pdf->stream('inventario');
       }
-      $articulos=DB::table('articulo as a')
-      ->join('categoria as c', 'a.idcategoria', '=', 'c.idcategoria')
-      ->select('a.idarticulo', 'c.nombre as categoria', 'a.codigo', 'a.nombre', 'a.cantidad',  'a.descripcion', 'a.imagen', 'a.estado')
-      ->orderBy('a.idarticulo', 'DESC')
-      ->paginate(8);
-
-      return view('inventario.reporte_inventario');
-      /*$pdf = App::make('dompdf.wrapper');
-      $pdf->loadHTML('<h1>Test</h1>');
-      return $pdf->stream('inventario');*/
     }
 }

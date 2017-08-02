@@ -134,8 +134,8 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{URL('inventarios/inventario')}}"><i class="fa fa-circle-o"></i> Ventas Día</a></li>
-                <li><a href="{{URL('seguridad')}}"><i class="fa fa-circle-o"></i> Ventas Mes</a></li>
+                <li><a href="{{URL('informes/ventas/ventas_dia')}}"><i class="fa fa-circle-o"></i> Ventas Día</a></li>
+                <li><a href="{{URL('informes/ventas/ventas_general')}}"><i class="fa fa-circle-o"></i> Ventas General</a></li>
                 <li><a href="{{URL('informes/inventario')}}"><i class="fa fa-circle-o"></i> Inventario</a></li>
               </ul>
             </li>
