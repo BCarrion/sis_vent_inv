@@ -144,7 +144,9 @@
   function mostrarValores()
   {
     datosArticulo=document.getElementById('pidarticulo').value.split('_');
-    $('#pprecio_venta').val(datosArticulo[2]);
+    console.log(datosArticulo[2]);
+    precio_entero=Math.round(datosArticulo[2]);
+    $('#pprecio_venta').val(precio_entero);
     $('#pdisponible').val(datosArticulo[1]);
   }
 

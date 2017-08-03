@@ -17,7 +17,6 @@
             <th>Impuesto</th>
             <th>Total</th>
             <th>Estado</th>
-            <th>Opciones</th>
           </thead>
           @foreach($ventas as $ven)
           <tr>
@@ -27,11 +26,6 @@
             <td>{{$ven->impuesto}}</td>
             <td>{{$ven->total_venta}}</td>
             <td>{{$ven->estado}}</td>
-
-            <td>
-              <a href="{{URL::action('VentaController@show', $ven->idventa)}}"><button class="btn btn-info">Detalles</button></a>
-              <a href="#" data-target="#modal-delete-{{$ven->idventa}}" data-toggle="modal"><button class="btn btn-danger">Anular</button></a>
-            </td>
           </tr>
           @include('ventas.venta.modal')
           @endforeach

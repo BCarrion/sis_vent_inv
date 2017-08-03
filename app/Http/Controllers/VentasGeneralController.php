@@ -26,27 +26,27 @@ class VentasGeneralController extends Controller
     {
       if($request)
       {
-      $query=trim($request->get('searchText'));
-      $fecha_inicial='2017-01-01 00:00:00';
-      $fecha_final='2017-08-01 00:00:00';
-      #$fecha_inicial= Carbon::now()->format('Y-m-d').' 00:00:00';
-      #$fecha_final= Carbon::now()->format('Y-m-d').' 23:59:59';
+      $query1=trim($request->get('searchText1'));
+      $query2=trim($request->get('searchText2'));
+      if($query1!="" && $query2!="")
+      {
+        $query1=$query1.' 00:00:00';
+        $query2=$query2.' 23:59:59';
+      }
       $ventas=DB::table('venta as v')
       ->join('persona as p', 'v.idcliente', '=', 'p.idpersona')
       ->join('detalle_venta as dv', 'v.idventa', '=', 'dv.idventa')
       ->select('v.idventa', 'v.fecha_hora', 'p.nombre', 'v.tipo_comprobante',
                'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.estado',
                'v.total_venta')
-      ->where('v.fecha_hora', '>=', $fecha_inicial, 'and', '<=', $fecha_final)
+      ->where('v.fecha_hora', '>=', $query1, 'and', '<=', $query2)
       ->orderBy('v.idventa', 'DESC')
       ->groupBy('v.idventa', 'v.fecha_hora', 'p.nombre', 'v.tipo_comprobante',
                'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.estado', 'v.total_venta')
       ->paginate(8);
-        return view('informes.ventas.ventas_general.index', ['ventas'=>$ventas, 'searchText'=>$query]);
+        return view('informes.ventas.ventas_general.index', ['ventas'=>$ventas, 'searchText1'=>$query1, 'searchText2'=>$query2]);
         }
-        else {
-          return view('informes.ventas.ventas_general.index',['searchText'=>$query]);
-        }
+
     }
 
     /**
