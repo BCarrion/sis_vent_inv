@@ -17,6 +17,8 @@ use PDF;
 
 class VentasGeneralController extends Controller
 {
+    private $query1;
+    private $query2;
     /**
      * Display a listing of the resource.
      *
@@ -28,18 +30,16 @@ class VentasGeneralController extends Controller
       {
       $query1=trim($request->get('searchText1'));
       $query2=trim($request->get('searchText2'));
-      if($query1!="" && $query2!="")
-      {
-        $query1=$query1.' 00:00:00';
-        $query2=$query2.' 23:59:59';
-      }
+      $query1=$query1.' 00:00:00';
+      $query2=$query2.' 23:59:59';
+
       $ventas=DB::table('venta as v')
       ->join('persona as p', 'v.idcliente', '=', 'p.idpersona')
       ->join('detalle_venta as dv', 'v.idventa', '=', 'dv.idventa')
       ->select('v.idventa', 'v.fecha_hora', 'p.nombre', 'v.tipo_comprobante',
                'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.estado',
                'v.total_venta')
-      ->where('v.fecha_hora', '>=', $query1, 'and', '<=', $query2)
+      ->whereBetween('v.fecha_hora',array( $query1, $query2))
       ->orderBy('v.idventa', 'DESC')
       ->groupBy('v.idventa', 'v.fecha_hora', 'p.nombre', 'v.tipo_comprobante',
                'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.estado', 'v.total_venta')
@@ -57,8 +57,6 @@ class VentasGeneralController extends Controller
 
      public function reporteGeneral(Request $request)
      {
-       $fecha_inicial='2017-01-01 00:00:00';
-       $fecha_final='2017-08-01 00:00:00';
 
        if ($request->has('download')) {
          $ventas=DB::table('venta as v')
@@ -67,12 +65,12 @@ class VentasGeneralController extends Controller
          ->select('v.idventa', 'v.fecha_hora', 'p.nombre', 'v.tipo_comprobante',
                   'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.estado',
                   'v.total_venta')
-         ->where('v.fecha_hora', '>=', $fecha_inicial, 'and', '<=', $fecha_final)
+         ->whereBetween('v.fecha_hora', array($query1, $query2))
          ->orderBy('v.idventa', 'DESC')
          ->groupBy('v.idventa', 'v.fecha_hora', 'p.nombre', 'v.tipo_comprobante',
                   'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.estado', 'v.total_venta')
          ->get();
-         $pdf = PDF::loadView('informes.ventas.ventas_general.reporte_general', array('ventas'=>$ventas));
+         $pdf = PDF::loadView('informes.ventas.ventas_general.reporte_general', array('ventas'=>$ventas))->setPaper('letter', 'landscape');
          return $pdf->stream('inventario');
 
      }

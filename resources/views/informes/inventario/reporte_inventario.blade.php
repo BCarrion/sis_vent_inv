@@ -1,20 +1,22 @@
-<div class="row">
-  <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-    <h3>Inventario De Articulos</h3>
-  </div>
-</div>
-<div class="row">
-  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <div class="table-responsive">
-      <table class="table table-stripped table-bordered table-condensed table-bordered">
-        <thead style="background-color: #A9D0F5">
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" href="css/reporte.css">
+    <title>Reporte de Inventario</title>
+  </head>
+  <body>
+  <h3>Inventario De Articulos</h3>
+
+      <table id="customers">
+      <tr>
           <th>Id</th>
-          <th>Nombre</th>
+          <th>Articulo</th>
           <th>Código</th>
           <th>Categoría</th>
           <th>Disponible</th>
           <th>Estado</th>
-        </thead>
+      </tr>
         <tbody>
         @foreach($articulos as $art)
         <tr>
@@ -28,6 +30,5 @@
         @endforeach
         </tbody>
       </table>
-    </div>
-    </div>
-</div>
+</body>
+</html>

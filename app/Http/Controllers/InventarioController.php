@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ArticuloFormRequest;
 use App\Articulo;
+use Carbon\Carbon;
 use DB;
 use PDF;
 
@@ -33,6 +34,7 @@ class InventarioController extends Controller
 
     public function reporteIventario(Request $request)
     {
+      $fecha_reporte= Carbon::now()->format('Y-m-d');
       if ($request->has('download')) {
         $arts= Articulo::all();
         $articulos=DB::table('articulo as a')
@@ -40,8 +42,8 @@ class InventarioController extends Controller
         ->select('a.idarticulo', 'c.nombre as categoria', 'a.codigo', 'a.nombre', 'a.cantidad',  'a.descripcion', 'a.imagen', 'a.estado')
         ->orderBy('a.idarticulo', 'DESC')
         ->get();
-        $pdf = PDF::loadView('informes.inventario.reporte_inventario', array('articulos'=>$articulos));
-        return $pdf->stream('inventario');
+        $pdf = PDF::loadView('informes.inventario.reporte_inventario', array('articulos'=>$articulos))->setPaper('letter', 'landscape');
+        return $pdf->stream('Inventario '.$fecha_reporte.'.pdf');
       }
     }
 }
