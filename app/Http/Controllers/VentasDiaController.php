@@ -69,8 +69,8 @@ class VentasDiaController extends Controller
          ->groupBy('v.idventa', 'v.fecha_hora', 'p.nombre', 'v.tipo_comprobante',
                   'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.estado', 'v.total_venta')
          ->get();
-         $pdf = PDF::loadView('informes.ventas.ventas_dia.reporte_dia', array('ventas'=>$ventas, 'fecha_reporte'=>$fecha_reporte));
-         return $pdf->stream('inventario');
+         $pdf = PDF::loadView('informes.ventas.ventas_dia.reporte_dia', array('ventas'=>$ventas, 'fecha_reporte'=>$fecha_reporte))->setPaper('letter', 'landscape');
+         return $pdf->stream('Ventas '.$fecha_reporte.'.pdf');
        }
      }
 
