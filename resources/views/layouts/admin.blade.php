@@ -53,11 +53,6 @@
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-
-                    <p>
-                      www.incanatoit.com - Desarrollando Software
-                      <small>www.youtube.com/jcarlosad7</small>
-                    </p>
                   </li>
 
                   <!-- Menu Footer-->
@@ -125,7 +120,7 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{URL('seguridad')}}"><i class="fa fa-circle-o"></i> Usuarios</a></li>
+                <li><a href="{{URL('administracion/usuario')}}"><i class="fa fa-circle-o"></i> Usuarios</a></li>
               </ul>
             </li>
             <li class="treeview">

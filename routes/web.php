@@ -24,6 +24,7 @@ Route::resource('ventas/venta', 'VentaController');
 Route::resource('informes/inventario', 'InventarioController');
 Route::resource('informes/ventas/ventas_dia', 'VentasDiaController');
 Route::resource('informes/ventas/ventas_general', 'VentasGeneralController');
+Route::resource('administracion/usuario', 'UsuarioController');
 
 Route::get('inventario/reporte_inventario',array(
             'as'=>'reporte_inventario',
