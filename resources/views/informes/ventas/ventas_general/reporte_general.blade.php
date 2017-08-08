@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" type="text/css" href="css/reporte.css">
-    <title>Ventas </title>
+    <title>Ventas Generales</title>
   </head>
   <body>
           <h3>Reporte de Ventas: </h3>

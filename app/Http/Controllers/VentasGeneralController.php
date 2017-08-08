@@ -17,8 +17,6 @@ use PDF;
 
 class VentasGeneralController extends Controller
 {
-    private $query1;
-    private $query2;
     /**
      * Display a listing of the resource.
      *
@@ -26,13 +24,14 @@ class VentasGeneralController extends Controller
      */
     public function index(Request $request)
     {
+      $fecha_reporte= Carbon::now()->format('Y-m-d');
+
       if($request)
       {
       $query1=trim($request->get('searchText1'));
       $query2=trim($request->get('searchText2'));
       $query1=$query1.' 00:00:00';
       $query2=$query2.' 23:59:59';
-
       $ventas=DB::table('venta as v')
       ->join('persona as p', 'v.idcliente', '=', 'p.idpersona')
       ->join('detalle_venta as dv', 'v.idventa', '=', 'dv.idventa')
@@ -44,7 +43,7 @@ class VentasGeneralController extends Controller
       ->groupBy('v.idventa', 'v.fecha_hora', 'p.nombre', 'v.tipo_comprobante',
                'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.estado', 'v.total_venta')
       ->paginate(8);
-        return view('informes.ventas.ventas_general.index', ['ventas'=>$ventas, 'searchText1'=>$query1, 'searchText2'=>$query2]);
+        return view('informes.ventas.ventas_general.index', ['ventas'=>$ventas, 'searchText1'=>$query1, 'searchText2'=>$query2, 'fecha_reporte'=>$fecha_reporte]);
         }
 
     }
@@ -57,8 +56,11 @@ class VentasGeneralController extends Controller
 
      public function reporteGeneral(Request $request)
      {
+       $fecha_reporte= Carbon::now()->format('Y-m-d');
 
        if ($request->has('download')) {
+         $query1=trim($request->get('searchText1'));
+         $query2=trim($request->get('searchText2'));
          $ventas=DB::table('venta as v')
          ->join('persona as p', 'v.idcliente', '=', 'p.idpersona')
          ->join('detalle_venta as dv', 'v.idventa', '=', 'dv.idventa')
@@ -71,7 +73,7 @@ class VentasGeneralController extends Controller
                   'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.estado', 'v.total_venta')
          ->get();
          $pdf = PDF::loadView('informes.ventas.ventas_general.reporte_general', array('ventas'=>$ventas))->setPaper('letter', 'landscape');
-         return $pdf->stream('inventario');
+         return $pdf->stream('Ventas Generales '.$fecha_reporte.'.pdf');
 
      }
    }

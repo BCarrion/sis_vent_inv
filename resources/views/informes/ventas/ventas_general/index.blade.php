@@ -2,7 +2,7 @@
 @section ('contenido')
   <div class="row">
     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-      <h3>Listado de ventas | <a href="{{URL::action('VentasGeneralController@reporteGeneral', ['download'=>'pdf'])}}"><button class="btn btn-success" type="button" name="button">Descargar</button></a></h3>
+      <h3>Listado de ventas | <a href="{{URL::action('VentasGeneralController@reporteGeneral', ['download'=>'pdf', 'searchText1'=>$searchText1, 'searchText2'=>$searchText2])}}"><button class="btn btn-success" type="button" name="button">Descargar</button></a></h3>
       @include('informes.ventas.ventas_general.search')
     </div>
   </div>
