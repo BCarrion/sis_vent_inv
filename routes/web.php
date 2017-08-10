@@ -41,3 +41,4 @@ Route::get('ventas/ventas_dia/reporte_general',array(
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');

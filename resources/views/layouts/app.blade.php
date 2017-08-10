@@ -8,11 +8,10 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title> Ventas - Ventas</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
 </head>
 <body>
     <div id="app">
@@ -30,7 +29,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        Ventas - Ventas
+                        {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
 
