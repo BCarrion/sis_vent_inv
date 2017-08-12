@@ -75,15 +75,38 @@ class IngresoController extends Controller
     {
         try
         {
+          $fecha=Date('ym');
+          $registros= DB::table('ingreso')->count();
           DB::beginTransaction();
           $ingreso=new Ingreso();
           $ingreso->idproveedor=$request->get('idproveedor');
           $ingreso->tipo_comprobante=$request->get('tipo_comprobante');
-          $ingreso->serie_comprobante=$request->get('serie_comprobante');
-          $ingreso->num_comprobante=$request->get('num_comprobante');
+
+          if($registros>0)
+          {
+            $consecutivo=Ingreso::all()->pluck('serie_comprobante')->last();
+            $div=explode('-', $consecutivo);
+            $numero=$div[2];
+            $numero=$numero+1;
+            if($numero / 10 < 1) $numero='000'.$numero;
+            elseif ($numero / 10 > 1 && $numero /100 < 1) $numero='00'.$numero;
+            elseif ($numero / 100 > 1 && $numero /1000 < 1) $numero='0'.$numero;
+            else $numero;
+            $ingreso->serie_comprobante= $fecha.'-'.$numero;
+            $ingreso->num_comprobante= $fecha.'-'.$numero;
+          }
+          else
+          {
+            $ingreso->serie_comprobante= $fecha.'-'.'0001';
+            $ingreso->num_comprobante= $fecha.'-'.'0001';
+          }
+
           $mytime=Carbon::now('America/Bogota');
           $ingreso->fecha_hora=$mytime->toDateTimeString();
-          $ingreso->impuesto='19';
+
+          if($ingreso->tipo_comprobante === 'factura')$ingreso->impuesto='19';
+          elseif ($ingreso->tipo_comprobante === 'remision')$ingreso->impuesto='0';
+          
           $ingreso->estado='A';
           $ingreso->save();
 

@@ -18,7 +18,7 @@
 {!!Form::open(array('url'=>'ventas/venta', 'method'=>'POST', 'autocomplete'=>'off'))!!}
 {!!Form::token()!!}
 <div class="row">
-  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
     <div class="form-group">
       <label for="cliente">Cliente</label>
       <select class="form-control selectpicker" name="idcliente" id="idcliente" data-live-search="true">
@@ -28,25 +28,13 @@
       </select>
     </div>
   </div>
-  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
     <div class="form-group">
       <label>Tipo Comprobante</label>
       <select class="form-control" name="tipo_comprobante">
         <option value="remision">Remisión</option>
         <option value="factura">Factura</option>
       </select>
-    </div>
-  </div>
-  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-    <div class="form-group">
-      <label for="serie_comprobante">Serie Comprobante</label>
-      <input type="text" name="serie_comprobante" required value="{{old('serie_comprobante')}}" class="form-control" placeholder="Serie de comprobante...">
-    </div>
-  </div>
-  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-    <div class="form-group">
-      <label for="num_comprobante">Número Comprobante</label>
-      <input type="text" name="num_comprobante" required value="{{old('serie_comprobante')}}" class="form-control" placeholder="Número de comprobante...">
     </div>
   </div>
 </div>

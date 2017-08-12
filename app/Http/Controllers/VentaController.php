@@ -63,6 +63,7 @@ class VentaController extends Controller
         ->where('art.cantidad', '>', '0')
         ->groupBy('articulo', 'art.idarticulo', 'art.cantidad')
         ->get();
+        dd($articulos);
 
         return view('ventas.venta.create', ['personas'=>$personas, 'articulos'=>$articulos]);
     }
@@ -77,8 +78,29 @@ class VentaController extends Controller
     {
         try
         {
+          $fecha=Date('ym');
+          $registros= DB::table('venta')->count();
           DB::beginTransaction();
           $venta=new Venta();
+          if($registros>0)
+          {
+            $consecutivo=Venta::all()->pluck('serie_comprobante')->last();
+            dd($consecutivo);
+            $div=explode('-', $consecutivo);
+            $numero=$div[2];
+            $numero=$numero+1;
+            if($numero / 10 < 1) $numero='000'.$numero;
+            elseif ($numero / 10 > 1 && $numero /100 < 1) $numero='00'.$numero;
+            elseif ($numero / 100 > 1 && $numero /1000 < 1) $numero='0'.$numero;
+            else $numero;
+            $venta->serie_comprobante= $fecha.'-'.$numero;
+            $venta->num_comprobante= $fecha.'-'.$numero;
+          }
+          else
+          {
+            $venta->serie_comprobante= $fecha.'-'.'0001';
+            $venta->num_comprobante= $fecha.'-'.'0001';
+          }
           $venta->idcliente=$request->get('idcliente');
           $venta->tipo_comprobante=$request->get('tipo_comprobante');
           $venta->serie_comprobante=$request->get('serie_comprobante');
@@ -87,7 +109,8 @@ class VentaController extends Controller
 
           $mytime=Carbon::now('America/Bogota');
           $venta->fecha_hora=$mytime->toDateTimeString();
-          $venta->impuesto='19';
+          if($venta->tipo_comprobante === 'factura')$venta->impuesto='19';
+          elseif ($venta->tipo_comprobante === 'remision')$venta->impuesto='0';
           $venta->estado='A';
           $venta->save();
 
