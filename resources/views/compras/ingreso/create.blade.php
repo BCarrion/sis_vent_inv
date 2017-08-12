@@ -131,7 +131,7 @@
     precio_compra=$('#pprecio_compra').val();
     precio_venta=$('#pprecio_venta').val();
 
-    if (idarticulo!="" && cantidad!="" && cantidad>0 && pprecio_compra!="" && pprecio_venta!="")
+    if (idarticulo!="" && cantidad!="" && cantidad>0 && precio_compra!="" && precio_venta!="" && precio_compra<=precio_venta)
     {
       subtotal[cont]=(cantidad*precio_compra);
       total=total+subtotal[cont];

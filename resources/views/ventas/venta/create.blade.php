@@ -151,7 +151,7 @@
     precio_venta=$('#pprecio_venta').val();
     disponible=$('#pdisponible').val();
 
-    if (idarticulo!="" && cantidad!="" && cantidad>0  && descuento!="" && pprecio_venta!="")
+    if (idarticulo!="" && cantidad!="" && cantidad>0  && descuento!="" && precio_venta!="" && disponible>=cantidad)
     {
       if(disponible>=cantidad)
       {
