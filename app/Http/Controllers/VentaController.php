@@ -63,7 +63,6 @@ class VentaController extends Controller
         ->where('art.cantidad', '>', '0')
         ->groupBy('articulo', 'art.idarticulo', 'art.cantidad')
         ->get();
-        dd($articulos);
 
         return view('ventas.venta.create', ['personas'=>$personas, 'articulos'=>$articulos]);
     }
@@ -85,9 +84,8 @@ class VentaController extends Controller
           if($registros>0)
           {
             $consecutivo=Venta::all()->pluck('serie_comprobante')->last();
-            dd($consecutivo);
             $div=explode('-', $consecutivo);
-            $numero=$div[2];
+            $numero=$div[1];
             $numero=$numero+1;
             if($numero / 10 < 1) $numero='000'.$numero;
             elseif ($numero / 10 > 1 && $numero /100 < 1) $numero='00'.$numero;
@@ -103,8 +101,6 @@ class VentaController extends Controller
           }
           $venta->idcliente=$request->get('idcliente');
           $venta->tipo_comprobante=$request->get('tipo_comprobante');
-          $venta->serie_comprobante=$request->get('serie_comprobante');
-          $venta->num_comprobante=$request->get('num_comprobante');
           $venta->total_venta=$request->get('total_venta');
 
           $mytime=Carbon::now('America/Bogota');

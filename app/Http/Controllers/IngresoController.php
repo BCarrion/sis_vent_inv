@@ -81,12 +81,11 @@ class IngresoController extends Controller
           $ingreso=new Ingreso();
           $ingreso->idproveedor=$request->get('idproveedor');
           $ingreso->tipo_comprobante=$request->get('tipo_comprobante');
-
           if($registros>0)
           {
             $consecutivo=Ingreso::all()->pluck('serie_comprobante')->last();
             $div=explode('-', $consecutivo);
-            $numero=$div[2];
+            $numero=$div[1];
             $numero=$numero+1;
             if($numero / 10 < 1) $numero='000'.$numero;
             elseif ($numero / 10 > 1 && $numero /100 < 1) $numero='00'.$numero;
@@ -106,7 +105,7 @@ class IngresoController extends Controller
 
           if($ingreso->tipo_comprobante === 'factura')$ingreso->impuesto='19';
           elseif ($ingreso->tipo_comprobante === 'remision')$ingreso->impuesto='0';
-          
+
           $ingreso->estado='A';
           $ingreso->save();
 
@@ -154,6 +153,7 @@ class IngresoController extends Controller
                  'i.serie_comprobante', 'i.num_comprobante', 'i.impuesto', 'i.estado',
                  DB::raw('sum(di.cantidad*precio_compra) as total'))
         ->where('i.idingreso', '=', $id)
+        ->groupBy('i.idingreso', 'i.fecha_hora', 'p.nombre', 'i.tipo_comprobante', 'i.serie_comprobante', 'i.num_comprobante', 'i.impuesto', 'i.estado')
         ->first();
 
         $detalles=DB::table('detalle_ingreso as d')

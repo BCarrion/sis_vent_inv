@@ -45,6 +45,7 @@
         <div class="form-group">
           <label>Articulo</label>
           <select class="form-control selectpicker" name="pidarticulo" id="pidarticulo" data-live-search="true">
+              <option selected="selected">Seleccione un producto</option>
             @foreach($articulos as $articulo)
               <option value="{{$articulo->idarticulo}}">{{$articulo->articulo}}</option>
             @endforeach
@@ -54,19 +55,19 @@
       <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
         <div class="form-group">
           <label for="cantidad">Cantidad</label>
-          <input type="number" name="pcantidad" id="pcantidad" class="form-control" placeholder="Cantidad...">
+          <input type="number" min="1" name="pcantidad" id="pcantidad" class="form-control" placeholder="Cantidad...">
         </div>
       </div>
       <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
         <div class="form-group">
           <label for="precio_compra">Precio Compra</label>
-          <input type="number" name="pprecio_compra" id="pprecio_compra" class="form-control" placeholder="Precio Compra...">
+          <input type="number" min="1" name="pprecio_compra" id="pprecio_compra" class="form-control" placeholder="Precio Compra...">
         </div>
       </div>
       <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
         <div class="form-group">
           <label for="precio_venta">Precio Venta</label>
-          <input type="number" name="pprecio_venta" id="pprecio_venta" class="form-control" placeholder="Precio Venta...">
+          <input type="number" min="1" name="pprecio_venta" id="pprecio_venta" class="form-control" placeholder="Precio Venta...">
         </div>
       </div>
       <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
@@ -135,7 +136,7 @@
       subtotal[cont]=(cantidad*precio_compra);
       total=total+subtotal[cont];
 
-      var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precio_compra[]" value="'+precio_compra+'"></td><td><input type="number" name="precio_venta[]" value="'+precio_venta+'"></td><td>'+subtotal[cont]+'</td></tr>';
+      var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td><td><input type="hidden" name="precio_compra[]" value="'+precio_compra+'">$ '+precio_compra+'</td><td><input type="hidden" name="precio_venta[]" value="'+precio_venta+'">$ '+precio_venta+'</td><td>$ '+subtotal[cont]+'</td></tr>';
 
       cont++;
       limpiar();
