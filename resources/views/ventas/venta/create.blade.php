@@ -99,7 +99,7 @@
             <th></th>
             <th></th>
             <th></th>
-            <th><h4 id="total">$ 0.00</h4><input type="hidden" name="total_venta" id="total_venta"></th>
+            <th><h4 id="total">$ 0</h4><input type="hidden" name="total_venta" id="total_venta"></th>
           </tfoot>
         </table>
       </div>
@@ -147,22 +147,29 @@
     articulo=$('#pidarticulo option:selected').text();
     cantidad=$('#pcantidad').val();
     descuento=$('#pdescuento').val();
+    if(descuento=='')
+    {
+        descuento=0;
+    }
 
     precio_venta=$('#pprecio_venta').val();
+    precio_venta_format=new Intl.NumberFormat().format(precio_venta);
     disponible=$('#pdisponible').val();
 
-    if (idarticulo!="" && cantidad!="" && cantidad>0  && descuento!="" && precio_venta!="" && disponible>=cantidad)
+    if (idarticulo!="" && cantidad!="" && cantidad>0 && precio_venta!="" && disponible>=cantidad)
     {
       if(disponible>=cantidad)
       {
         subtotal[cont]=(cantidad*precio_venta-descuento);
+        sub_format=new Intl.NumberFormat().format(subtotal[cont]);
         total=total+subtotal[cont];
+        total_format=new Intl.NumberFormat().format(total);
 
-        var fila='<tr class="selected" id="fila'+cont+'"> <td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td> <td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td> <td><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td> <td><input type="hidden" name="precio_venta[]" value="'+precio_venta+'">$ '+precio_venta+'</td><td><input type="hidden" name="descuento[]" value="'+descuento+'">$ '+descuento+'</td> <td>$ '+subtotal[cont]+'</td></tr>';
+        var fila='<tr class="selected" id="fila'+cont+'"> <td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td> <td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td> <td><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td> <td><input type="hidden" name="precio_venta[]" value="'+precio_venta+'">$ '+precio_venta_format+'</td><td><input type="hidden" name="descuento[]" value="'+descuento+'">$ '+descuento+'</td> <td>$ '+sub_format+'</td></tr>';
 
         cont++;
         limpiar();
-        $("#total").html("$ "+ total);
+        $("#total").html("$ "+ total_format);
         $("#total_venta").val(total);
         evaluar();
         $('#detalles').append(fila);

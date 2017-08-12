@@ -28,7 +28,8 @@
               <td>{{$ven->nombre}}</td>
               <td>{{$ven->tipo_comprobante.': '.'-'.$ven->num_comprobante}}</td>
               <td>{{$ven->impuesto}}</td>
-              <td>{{$ven->total_venta}}</td>
+              <? $venta_format=number_format($ven->total_venta) ?>
+              <td>$ {{$venta_format}}</td>
             </tr>
             <?
             $gran_total=$gran_total+$ven->total_venta;
