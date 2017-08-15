@@ -101,10 +101,8 @@ class VentaController extends Controller
           }
           $venta->idcliente=$request->get('idcliente');
           $venta->tipo_comprobante=$request->get('tipo_comprobante');
-          #$venta_format=$request->get('total_venta');
-          #dd($venta_format);
-          #$venta_format=number_format($request->get('total_venta'));
           $venta->total_venta=$request->get('total_venta');
+
           $mytime=Carbon::now('America/Bogota');
           $venta->fecha_hora=$mytime->toDateTimeString();
           if($venta->tipo_comprobante === 'factura')$venta->impuesto='19';

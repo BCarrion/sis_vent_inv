@@ -25,8 +25,7 @@
             <td>{{$ven->nombre}}</td>
             <td>{{$ven->tipo_comprobante.': '.$ven->num_comprobante}}</td>
             <td>{{$ven->impuesto}}</td>
-            <?$total_format= number_format($ven->total_venta);?>
-            <td>$ {{$total_format}}</td>
+            <td>{{$ven->total_venta}}</td>
             <td>{{$ven->estado}}</td>
 
             <td>
