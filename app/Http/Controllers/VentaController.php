@@ -37,6 +37,7 @@ class VentaController extends Controller
          ->select('v.idventa', 'v.fecha_hora', 'p.nombre', 'v.tipo_comprobante',
                   'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.estado',
                   'v.total_venta')
+         ->where('v.tipo_comprobante', '!=', 'Devolucion')
          ->where('v.num_comprobante', 'LIKE', '%'.$query.'%')
          ->orderBy('v.idventa', 'DESC')
          ->groupBy('v.idventa', 'v.fecha_hora', 'p.nombre', 'v.tipo_comprobante',
