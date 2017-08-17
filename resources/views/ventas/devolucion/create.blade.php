@@ -2,7 +2,7 @@
 @section ('contenido')
 <div class="row">
   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-    <h3>Nueva Venta</h3>
+    <h3>Nueva Devolucion</h3>
     @if(count($errors)>0)
     <div class="alert alert-danger">
       <ul>
@@ -15,26 +15,19 @@
   </div>
 </div>
 
-{!!Form::open(array('url'=>'ventas/venta', 'method'=>'POST', 'autocomplete'=>'off'))!!}
+{!!Form::open(array('url'=>'ventas/devolucion', 'method'=>'POST', 'autocomplete'=>'off', $persona->idpersona, 'Remision'))!!}
 {!!Form::token()!!}
 <div class="row">
   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
     <div class="form-group">
       <label for="cliente">Cliente</label>
-      <select class="form-control selectpicker" name="idcliente" id="idcliente" data-live-search="true">
-        @foreach($personas as $persona)
-          <option value="{{$persona->idpersona}}">{{$persona->nombre}}</option>
-        @endforeach()
-      </select>
+        <input type="text" name="idcliente" class="form-control" value="{{$persona->nombre}}">
     </div>
   </div>
   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
     <div class="form-group">
-      <label>Tipo Comprobante</label>
-      <select class="form-control" name="tipo_comprobante">
-        <option value="remision">Remisión</option>
-        <option value="factura">Factura</option>
-      </select>
+      <label for="cliente">tipo Comprobante</label>
+        <input type="text" name="tipo_comprobante" class="form-control" value="Remision">
     </div>
   </div>
 </div>
@@ -142,10 +135,10 @@
   function agregar()
   {
     datosArticulo=document.getElementById('pidarticulo').value.split('_');
-
     idarticulo=datosArticulo[0];
     articulo=$('#pidarticulo option:selected').text();
     cantidad=$('#pcantidad').val();
+        alert(cantidad);
     descuento=$('#pdescuento').val();
     if(descuento=='')
     {

@@ -21,25 +21,34 @@ class InventarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-      $articulos=DB::table('articulo as a')
-      ->join('categoria as c', 'a.idcategoria', '=', 'c.idcategoria')
-      ->select('a.idarticulo', 'c.nombre as categoria', 'a.codigo', 'a.nombre', 'a.cantidad',  'a.descripcion', 'a.imagen', 'a.estado')
-      ->orderBy('a.idarticulo', 'DESC')
-      ->paginate(8);
+      if ($request) {
+        $query=trim($request->get('searchText'));
+        $articulos=DB::table('articulo as a')
+        ->join('categoria as c', 'a.idcategoria', '=', 'c.idcategoria')
+        ->select('a.idarticulo', 'c.nombre as categoria', 'a.codigo', 'a.nombre', 'a.cantidad',  'a.descripcion', 'a.imagen', 'a.estado')
+        ->where('a.nombre', 'LIKE', '%'.$query.'%')
+        ->orwhere('c.nombre', 'LIKE', '%'.$query.'%')
+        ->orderBy('a.idarticulo', 'DESC')
+        ->paginate(8);
 
-      return view('informes.inventario.index', ['articulos'=>$articulos]);
+        return view('informes.inventario.index', ['articulos'=>$articulos, 'searchText'=>$query]);
+      }
+
     }
 
     public function reporteIventario(Request $request)
     {
       $fecha_reporte= Carbon::now()->format('Y-m-d');
       if ($request->has('download')) {
+        $query=trim($request->get('searchText'));
         $arts= Articulo::all();
         $articulos=DB::table('articulo as a')
         ->join('categoria as c', 'a.idcategoria', '=', 'c.idcategoria')
         ->select('a.idarticulo', 'c.nombre as categoria', 'a.codigo', 'a.nombre', 'a.cantidad',  'a.descripcion', 'a.imagen', 'a.estado')
+        ->where('a.nombre', 'LIKE', '%'.$query.'%')
+        ->orwhere('c.nombre', 'LIKE', '%'.$query.'%')
         ->orderBy('a.idarticulo', 'DESC')
         ->get();
         $pdf = PDF::loadView('informes.inventario.reporte_inventario', array('articulos'=>$articulos))->setPaper('letter', 'landscape');

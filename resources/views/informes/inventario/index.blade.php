@@ -2,7 +2,8 @@
 @section('contenido')
 <div class="row">
   <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-    <h3>Inventario De Articulos | <a href="{{URL::action('InventarioController@reporteIventario', ['download'=>'pdf'])}}"><button class="btn btn-success" type="button" name="button">Descargar</button></a></h3>
+    <h3>Inventario De Articulos | <a href="{{URL::action('InventarioController@reporteIventario', ['download'=>'pdf', 'searchText'=>$searchText])}}"><button class="btn btn-success" type="button" name="button">Descargar</button></a></h3>
+    @include('informes.inventario.search')
   </div>
 </div>
 <div class="row">

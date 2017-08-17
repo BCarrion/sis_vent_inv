@@ -31,6 +31,7 @@ Route::resource('ventas/cliente', 'ClienteController');
 Route::resource('compras/proveedor', 'ProveedorController');
 Route::resource('compras/ingreso', 'IngresoController');
 Route::resource('ventas/venta', 'VentaController');
+Route::resource('ventas/devolucion', 'DevolucionController');
 Route::resource('informes/inventario', 'InventarioController');
 Route::resource('informes/ventas/ventas_dia', 'VentasDiaController');
 

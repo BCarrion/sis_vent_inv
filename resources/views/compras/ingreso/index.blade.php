@@ -25,7 +25,8 @@
             <td>{{$ing->nombre}}</td>
             <td>{{$ing->tipo_comprobante.': '.$ing->num_comprobante}}</td>
             <td>{{$ing->impuesto}}</td>
-            <td>{{$ing->total}}</td>
+            <? $ing_format=number_format($ing->total) ?>
+            <td>$ {{$ing_format}}</td>
             <td>{{$ing->estado}}</td>
 
             <td>
