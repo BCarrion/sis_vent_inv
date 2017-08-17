@@ -99,8 +99,8 @@ class DevolucionController extends Controller
                 $numero=$div[1];
                 $numero=$numero+1;
                 if($numero / 10 < 1) $numero='000'.$numero;
-                elseif ($numero / 10 > 1 && $numero /100 < 1) $numero='00'.$numero;
-                elseif ($numero / 100 > 1 && $numero /1000 < 1) $numero='0'.$numero;
+                elseif ($numero / 10 > 1 && $numero /100 < 1 || $numero / 10 == 1) $numero='00'.$numero;
+                elseif ($numero / 100 > 1 && $numero /1000 < 1 || $numero / 100 == 1) $numero='0'.$numero;
                 else $numero;
                 $venta->serie_comprobante= $fecha.'-'.$numero;
                 $venta->num_comprobante= $fecha.'-'.$numero;
@@ -131,7 +131,7 @@ class DevolucionController extends Controller
                 $detalle=new DetalleVenta();
                 $detalle->idventa=$venta->idventa;
                 $detalle->idarticulo=$idarticulo[$cont];
-                $detalle->cantidad=$cantidad[$cont];
+                $detalle->cantidad=$cantidad[$cont]*-1;
                 $detalle->descuento=$descuento[$cont];
                 $detalle->precio_venta=$precio_venta[$cont];
                 $detalle->save();
