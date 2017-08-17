@@ -86,9 +86,66 @@ class DevolucionController extends Controller
      */
     public function store(DevolucionFormRequest $request)
     {
-        if ($request->has('Remision')) {
-            dd('llego el dato');
-        }
+            try
+            {
+              $fecha=Date('ym');
+              $registros= DB::table('venta')->count();
+              DB::beginTransaction();
+              $venta=new Venta();
+              if($registros>0)
+              {
+                $consecutivo=Venta::all()->pluck('serie_comprobante')->last();
+                $div=explode('-', $consecutivo);
+                $numero=$div[1];
+                $numero=$numero+1;
+                if($numero / 10 < 1) $numero='000'.$numero;
+                elseif ($numero / 10 > 1 && $numero /100 < 1) $numero='00'.$numero;
+                elseif ($numero / 100 > 1 && $numero /1000 < 1) $numero='0'.$numero;
+                else $numero;
+                $venta->serie_comprobante= $fecha.'-'.$numero;
+                $venta->num_comprobante= $fecha.'-'.$numero;
+              }
+              else
+              {
+                $venta->serie_comprobante= $fecha.'-'.'0001';
+                $venta->num_comprobante= $fecha.'-'.'0001';
+              }
+              $venta->idcliente=$request->get('idcliente');
+              $venta->tipo_comprobante='Devolucion';
+              $venta->total_venta=$request->get('total_venta');
+
+              $mytime=Carbon::now('America/Bogota');
+              $venta->fecha_hora=$mytime->toDateTimeString();
+              $venta->impuesto='0';
+              $venta->estado='A';
+              $venta->save();
+
+              $idarticulo=$request->get('idarticulo');
+              $cantidad=$request->get('cantidad');
+              $descuento=$request->get('descuento');
+              $precio_venta=$request->get('precio_venta');
+
+              $cont=0;
+
+              while ($cont<count($idarticulo)) {
+                $detalle=new DetalleVenta();
+                $detalle->idventa=$venta->idventa;
+                $detalle->idarticulo=$idarticulo[$cont];
+                $detalle->cantidad=$cantidad[$cont];
+                $detalle->descuento=$descuento[$cont];
+                $detalle->precio_venta=$precio_venta[$cont];
+                $detalle->save();
+                $cont=$cont+1;
+              }
+
+              DB::commit();
+            }
+            catch (\Exception $e)
+            {
+              DB::rollback();
+            }
+
+            return Redirect::to('ventas/devolucion');
     }
 
     /**

@@ -29,9 +29,17 @@
               <td>{{$ven->tipo_comprobante.': '.'-'.$ven->num_comprobante}}</td>
               <td>{{$ven->impuesto}}</td>
               <? $venta_format=number_format($ven->total_venta) ?>
-              <td>$ {{$venta_format}}</td>
+              <?php if ($ven->tipo_comprobante=='Devolucion'): ?>
+                <td>$ {{$venta_format}} -</td>
+              <?php endif; ?>
+              <?php if ($ven->tipo_comprobante!='Devolucion'): ?>
+                <td>$ {{$venta_format}}</td>
+              <?php endif; ?>
             </tr>
             <?
+            if($ven->tipo_comprobante=='Devolucion')
+            $gran_total=$gran_total-$ven->total_venta;
+            else
             $gran_total=$gran_total+$ven->total_venta;
             $cont++ ;
             ?>

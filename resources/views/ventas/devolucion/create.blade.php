@@ -15,19 +15,12 @@
   </div>
 </div>
 
-{!!Form::open(array('url'=>'ventas/devolucion', 'method'=>'POST', 'autocomplete'=>'off', $persona->idpersona, 'Remision'))!!}
+{!!Form::open(array('url'=>'ventas/devolucion', 'method'=>'POST', 'autocomplete'=>'off'))!!}
 {!!Form::token()!!}
 <div class="row">
   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
     <div class="form-group">
-      <label for="cliente">Cliente</label>
-        <input type="text" name="idcliente" class="form-control" value="{{$persona->nombre}}">
-    </div>
-  </div>
-  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-    <div class="form-group">
-      <label for="cliente">tipo Comprobante</label>
-        <input type="text" name="tipo_comprobante" class="form-control" value="Remision">
+      <input type="hidden" name="idcliente" class="form-control" value="{{$persona->idpersona}}">
     </div>
   </div>
 </div>
@@ -138,7 +131,6 @@
     idarticulo=datosArticulo[0];
     articulo=$('#pidarticulo option:selected').text();
     cantidad=$('#pcantidad').val();
-        alert(cantidad);
     descuento=$('#pdescuento').val();
     if(descuento=='')
     {
