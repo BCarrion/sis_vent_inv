@@ -26,7 +26,7 @@
               <td>{{$cont}} </td>
               <td>{{$ven->fecha_hora}}</td>
               <td>{{$ven->nombre}}</td>
-              <td>{{$ven->tipo_comprobante.': '.'-'.$ven->num_comprobante}}</td>
+              <td>{{$ven->tipo_comprobante.': '.$ven->num_comprobante}}</td>
               <td>{{$ven->impuesto}}</td>
               <? $venta_format=number_format($ven->total_venta) ?>
               <?php if ($ven->tipo_comprobante=='Devolucion'): ?>
